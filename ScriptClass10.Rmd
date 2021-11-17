@@ -1,0 +1,34 @@
+---
+title: "class10"
+author: "Mikhail Kurenkov"
+date: "17 11 2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+library(tidyverse)
+library(ggplot2)
+
+oscar_prize  <- read_csv("prize.csv")
+oscar_laureate  <- read_csv("laureate.csv")
+
+full_oscar <- bind_rows(oscar_prize, oscar_laureate)
+
+ggplot(data = full_oscar) +
+geom_line(mapping = aes(x = year, category))
+
+ggplot(data = ethics)+
+geom_histogram(mapping = aes(x = U1))
+
+ggplot(data = ethics) + 
+  geom_point(mapping = aes(x = U1, y = D1, color = AA1)) + 
+  facet_wrap(~ AA1, nrow = 2)
+  
+ggplot(data = ethics) + 
+  geom_bar(mapping = aes(x = D1, fill = AA1), position = "fill")
+  
+ggplot() + 
+  geom_point(data = ethics, mapping = aes(x = D1, y = U1)) + 
+  geom_smooth(data = ethics, mapping = aes(x = D1, y = U1))
