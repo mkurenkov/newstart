@@ -1,0 +1,35 @@
+---
+title: "OscarKurenkov"
+author: "Mikhail Kurenkov"
+date: "17 11 2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+library(dplyr)
+library(ggplot2)
+
+oscar_age_female  <- read.csv("oscar_age_female.csv")
+oscar_age_male  <- read.csv("oscar_age_male.csv")
+
+female_new <-  
+  mutate(oscar_age_female, sex = "female") 
+male_new <- 
+  mutate( oscar_age_male, sex = "male")
+  
+full_data <- bind_rows(male_new, female_new)
+
+#Получение оскара в разные годы по полу
+ggplot(data = full_data, aes(x = Year, y = Age)) +
+  geom_point(aes(colour = factor(sex))) + 
+  labs(title = "Во сколько лет получали первый Оскар мужчины и женщины в разные годы", x = "Годы", 
+       y = "Возраст") 
+#+ facet_grid(~sex)
+
+
+#распределение по полу\возрасту
+ ggplot(data = full_data, aes(x = Age, group = sex, fill = sex)) +
+   geom_density(alpha = 0.5)
